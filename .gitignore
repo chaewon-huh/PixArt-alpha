@@ -163,3 +163,8 @@ output/
 #cache for docker
 docker/cache/gradio
 docker/cache/huggingface
+
+data_raw/
+*.zip
+nohup.out
+*.png

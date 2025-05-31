@@ -2,12 +2,12 @@ torch==2.1.1
 torchaudio==2.1.1
 torchvision==0.16.1
 mmcv==1.7.0
-git+https://github.com/huggingface/diffusers
+diffusers==0.30.3
 timm==0.6.12
-accelerate
+accelerate==0.34.2
 tensorboard
 tensorboardX
-transformers
+transformers==4.45.0
 sentencepiece~=0.1.99
 ftfy
 beautifulsoup4

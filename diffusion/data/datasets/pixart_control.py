@@ -50,8 +50,8 @@ class InternalDataHed(Dataset):
             meta_data_clean = [item for item in meta_data if item['ratio'] <= 4]
             self.meta_data_clean.extend(meta_data_clean)
             self.img_samples.extend([os.path.join(self.root.replace('InternData', "InternImgs"), item['path']) for item in meta_data_clean])
-            self.txt_feat_samples.extend([os.path.join(self.root, 'caption_features', '_'.join(item['path'].rsplit('/', 1)).replace('.png', '.npz')) for item in meta_data_clean])
-            self.vae_feat_samples.extend([os.path.join(self.root, f'img_vae_features_{resolution}resolution/noflip', '_'.join(item['path'].rsplit('/', 1)).replace('.png', '.npy')) for item in meta_data_clean])
+            self.txt_feat_samples.extend([os.path.join(self.root, 'caption_features', os.path.basename(item['path']).replace('.png', '.npz')) for item in meta_data_clean])
+            self.vae_feat_samples.extend([os.path.join(self.root, f'img_vae_features_{resolution}resolution/noflip', os.path.basename(item['path']).replace('.png', '.npy')) for item in meta_data_clean])
             self.hed_feat_samples.extend([os.path.join(self.root, f'hed_feature_{resolution}', item['path'].replace('.png', '.npz')) for item in meta_data_clean])
             self.prompt_samples.extend([item['prompt'] for item in meta_data_clean])
 
@@ -87,8 +87,8 @@ class InternalDataHed(Dataset):
         npy_path = self.vae_feat_samples[index]
         hed_npz_path = self.hed_feat_samples[index]
         prompt = self.prompt_samples[index]
-        # only trained on single-scale 1024 res data
-        data_info = {'img_hw': torch.tensor([1024., 1024.], dtype=torch.float32), 'aspect_ratio': torch.tensor(1.)}
+        # Use the actual resolution instead of hardcoded 1024
+        data_info = {'img_hw': torch.tensor([float(self.resolution), float(self.resolution)], dtype=torch.float32), 'aspect_ratio': torch.tensor(1.)}
 
         if self.load_vae_feat:
             img = self.loader(npy_path)
