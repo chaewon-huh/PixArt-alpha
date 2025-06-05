@@ -168,3 +168,4 @@ data_raw/
 *.zip
 nohup.out
 *.png
+data_val/
